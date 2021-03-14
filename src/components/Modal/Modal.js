@@ -1,25 +1,4 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
-// import style from './Modal.module.css';
-
-// const Modal = ({ modalImage, closeModal }) => {
-//   return (
-//     <div onClick={closeModal} className={style.Overlay}>
-//       <div className={style.Modal}>
-//         <img src={modalImage} alt="" />
-//       </div>
-//     </div>
-//   );
-// };
-
-// Modal.propTypes = {
-//   modalImage: PropTypes.string.isRequired,
-//   closeModal: PropTypes.func.isRequired,
-// };
-
-// export default Modal;
-
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import style from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
@@ -32,8 +11,6 @@ export default class Modal extends Component {
     closeModal: PropTypes.func.isRequired,
   };
 
-  backdropRef = createRef();
-
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyPress);
   }
@@ -43,19 +20,15 @@ export default class Modal extends Component {
   }
 
   handleKeyPress = (e) => {
-    if (e.code !== 'Escape') {
-      return;
+    if (e.code === 'Escape') {
+      this.props.closeModal();
     }
-
-    this.props.closeModal();
   };
 
   handleBackdropClick = (e) => {
-    if (this.backdropRef.current && e.target !== this.backdropRef.current) {
-      return;
+    if (e.currentTarget === e.target) {
+      this.props.closeModal();
     }
-
-    this.props.closeModal();
   };
 
   render() {

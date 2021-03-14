@@ -44,42 +44,28 @@ export default class App extends Component {
         }));
       })
       .catch((error) => this.setState({ error }))
-      .finally(() => this.setState({ isLoading: false }));
+      .finally(() => {
+        this.setState({ isLoading: false });
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        });
+      });
   };
-
-  // linkBigImage = (id) => {
-  //   const currentItemImage = this.state.images.find(
-  //     (item) => item.id === Number(id)
-  //   );
-  //   this.openModal();
-  //   const { largeImageURL } = currentItemImage;
-  //   this.setState({ linkLargeImage: largeImageURL });
-  // };
 
   openModal = (modalImage) => this.setState({ isModalOpen: true, modalImage });
 
   closeModal = () => this.setState({ isModalOpen: false });
 
   render() {
-    const {
-      images,
-      isModalOpen,
-      modalImage,
-      isLoading,
-      error,
-      linkLargeImage,
-    } = this.state;
+    const { images, isModalOpen, modalImage, isLoading, error } = this.state;
 
     return (
       <>
         {error && <h1>Ошибка</h1>}
         <Searchba onSubmit={this.onSubmit} />
         {isLoading && <Loader />}
-        <ImageGallery
-          images={images}
-          // linkBigImage={this.linkBigImage}
-          openModal={this.openModal}
-        />
+        <ImageGallery images={images} openModal={this.openModal} />
         {images.length > 0 && <Button changePage={this.changePage} />}
 
         {isModalOpen && (

@@ -14,7 +14,6 @@ export default class App extends Component {
     isModalOpen: false,
     isLoading: false,
     error: null,
-    linkLargeImage: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
